@@ -1,38 +1,26 @@
 package ru.kaptakov.java.logger;
 
-public interface Log<M> {
-    boolean log(final M message);
+import ru.kaptakov.java.storage.Recorder;
 
-    interface LogReader<T> {
-        T read();
-    }
+public interface Log<R> {
+    void log(String message);
+    R getLog();
 
-    class SimpleConsoleLogger implements Log<String> {
-        @Override
-        public boolean log(String message) {
-            System.out.println(message);
-            return true;
-        }
-    }
+   abstract class AbstractLogger<R> implements Log<R> {
+        protected Recorder<R> recorder;
 
-    class NamedConsoleLogger extends SimpleConsoleLogger {
-        protected String title;
+       public AbstractLogger(Recorder<R> recorder) {
+           this.recorder = recorder;
+       }
 
-        public  NamedConsoleLogger(String title){
-            this.title = title;
-        }
+       @Override
+       public void log(String message) {
+           recorder.write(message);
+       }
 
-        @Override
-        public boolean log(String message) {
-            return super.log(title + ": " + message);
-        }
-    }
-
-    class SimpleObjectConsoleLogger implements Log<Object> {
-        @Override
-        public boolean log(Object message) {
-            System.out.println(message.toString());
-            return true;
-        }
-    }
+       @Override
+       public R getLog() {
+           return recorder.read();
+       }
+   }
 }
