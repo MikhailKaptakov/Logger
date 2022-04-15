@@ -5,7 +5,8 @@ import ru.kaptakov.java.storage.Recorder;
 public interface Log<R> {
     void log(String message);
     R getLog();
-    
+
+   // impl Switch
    abstract class Logger<R> implements Log<R>, Switch {
         protected boolean state = true;
 
@@ -29,6 +30,7 @@ public interface Log<R> {
             return this.state;
         }
     }
+
    abstract class CapacityLogger<S,R> extends Logger<R>{
         protected Recorder.LogStorage<S,R> logStorage;
 
@@ -38,9 +40,10 @@ public interface Log<R> {
 
        @Override
        public void log(String message) {
-           if (this.state) {
-               logStorage.write(message);
+           if (!this.state) {
+               return;
            }
+           logStorage.write(message);
        }
 
        @Override
