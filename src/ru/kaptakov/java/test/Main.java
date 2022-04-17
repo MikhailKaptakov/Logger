@@ -4,7 +4,7 @@ import ru.kaptakov.java.logger.ListLogger;
 
 public class Main {
     public static void main(String[] args) {
-        ListLogger logger = new ListLogger();
+        ListLogger logger = new ListLogger("info");
         logger.setStorageCapacity(12);
         for (int i = 0; i< 30; i++) {
             logger.log(i + "");

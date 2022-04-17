@@ -13,7 +13,7 @@ public interface Log<R> {
 
        public Logger() {
            this.state = true;
-           this.title = "";
+           this.title = null;
        }
 
        public Logger(String title) {
@@ -49,6 +49,7 @@ public interface Log<R> {
         protected Recorder.LogStorage<S,R> logStorage;
 
        public CapacityLogger(Recorder.LogStorage<S,R> logStorage) {
+           super();
            this.logStorage = logStorage;
        }
 

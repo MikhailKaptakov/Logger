@@ -4,6 +4,7 @@ import ru.kaptakov.java.storage.ListStorage;
 import ru.kaptakov.java.storage.Recorder;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ListLogger extends Log.CapacityLogger<List<String>, List<String>> {
 
@@ -21,7 +22,11 @@ public class ListLogger extends Log.CapacityLogger<List<String>, List<String>> {
 
     @Override
     public void log(String message) {
-        super.log(message);
+        if (!(title.equals("") || title == null)) {
+            super.log(title.toUpperCase() + ": " + message);
+        } else {
+            super.log(message);
+        }
     }
 
     @Override
