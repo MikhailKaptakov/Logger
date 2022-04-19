@@ -38,7 +38,8 @@ public class FileStorage extends Recorder.LogStorage<Path[], String> {
         System.out.println("set current file" + storage[currentFileIndex].toString());
     }
 
-    public static FileStorage createFileStorage (Path logDirectory, String fileName, String fileExtension, int fileSizeKb, int fileCount) {
+    public static FileStorage createFileStorage (Path logDirectory, String fileName, String fileExtension,
+                                                 int fileSizeKb, int fileCount) {
         int countOfFiles = Math.max(fileCount, 1);
         if (!Files.isDirectory(logDirectory)) {
             throw new IllegalFileStorageException(logDirectory + " this path isn't lead to directory");
@@ -71,7 +72,7 @@ public class FileStorage extends Recorder.LogStorage<Path[], String> {
 
     @Override
     public String read() {
-        return "log writes to" + storage.toString();
+        return "log writes to " + storage[currentFileIndex].toString();
     }
 
     @Override
@@ -97,10 +98,10 @@ public class FileStorage extends Recorder.LogStorage<Path[], String> {
 
     private void isFileCorrect(Path filePath) throws IllegalFileStorageException{
         if (!Files.isRegularFile(filePath)) {
-            throw new IllegalFileStorageException(filePath.toString() + " is not regularFile");
+            throw new IllegalFileStorageException(filePath + " is not regularFile");
         }
         if (!Files.isWritable(filePath)) {
-            throw new IllegalFileStorageException(filePath.toString() + " is not writableFile");
+            throw new IllegalFileStorageException(filePath + " is not writableFile");
         }
     }
 
